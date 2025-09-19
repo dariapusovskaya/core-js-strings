@@ -238,8 +238,10 @@ function endsWith(str, substr) {
  *   formatTime(0, 45) => "00:45"
  *   formatTime(0, 0) => "00:00"
  */
-function formatTime(/* minutes, seconds */) {
-  throw new Error('Not implemented');
+function formatTime(minutes, seconds) {
+  const mm = String(minutes).padStart(2, '0');
+  const ss = String(seconds).padStart(2, '0');
+  return `${mm}:${ss}`;
 }
 
 /**
@@ -252,8 +254,8 @@ function formatTime(/* minutes, seconds */) {
  *   reverseString('abcdef') => 'fedcba'
  *   reverseString('12345') => '54321'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join(''); //вначале делает массив, затем переворачивает и соединяет
 }
 
 /**
@@ -268,7 +270,9 @@ function reverseString(/* str */) {
  *   orderAlphabetically('abc123xyz') => '123abcxyz'
  */
 function orderAlphabetically(/* str */) {
-  throw new Error('Not implemented');
+  const charArray = str.split(''); //сортирует массив по алфавиту
+  charArray.sort(); //преобразует массив обратно в строку
+  return charArray.join('');
 }
 
 /**
@@ -283,8 +287,8 @@ function orderAlphabetically(/* str */) {
  *   containsSubstring('JavaScript is Fun', 'Python') => false
  *   containsSubstring('12345', '34') => true
  */
-function containsSubstring(/* str, substring */) {
-  throw new Error('Not implemented');
+function containsSubstring(str, substring) {
+  return str.includes(substring);
 }
 
 /**
@@ -301,8 +305,15 @@ function containsSubstring(/* str, substring */) {
  *   countVowels('aEiOu') => 5
  *   countVowels('XYZ') => 1
  */
-function countVowels(/* str */) {
-  throw new Error('Not implemented');
+function countVowels(str) {
+  const vowels = 'aeiouyAEIOUY'; //создает строку с гласными
+  let count = 0; // инициирует счестчик
+  for (let i = 0; i < str.length; i++) { // проходится циклом по каждой букве чтобы проверить
+    if (vowels.includes(str[i])) {
+      count++;
+    }
+  }
+  return count;
 }
 
 /**
@@ -318,8 +329,10 @@ function countVowels(/* str */) {
  *   isPalindrome('apple') => false
  *   isPalindrome('No lemon, no melon') => true
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+const cleanedStr = str.toLowerCase().replace(/[^a-z0-9]/g, ''); // приводит к нижнему регистру и удаляет все, кроме бук-цифр
+const reversedStr = cleanedStr.split('').reverse().join(''); // создаёт обратную строку
+return cleanedStr === reversedStr; // сравнивает исходную и обратную
 }
 
 /**
@@ -334,8 +347,15 @@ function isPalindrome(/* str */) {
  *   findLongestWord('A long and winding road') => 'winding'
  *   findLongestWord('No words here') => 'words'
  */
-function findLongestWord(/* sentence */) {
-  throw new Error('Not implemented');
+function findLongestWord(sentence) {
+  const words = sentence.split(' '); // разбивает предложение на слова
+  let longestWord = ''; // здесь храним самое длинное слово
+  for (let word of words) {
+      if (word.length > longestWord.length) { // проходится по всему массиву и сравнивает длины слов
+          longestWord = word;
+      }
+  }
+  return longestWord;
 }
 
 /**
@@ -348,9 +368,12 @@ function findLongestWord(/* sentence */) {
  *   reverseWords('Hello World') => 'olleH dlroW'
  *   reverseWords('The Quick Brown Fox') => 'ehT kciuQ nworB xoF'
  */
-function reverseWords(/* str */) {
-  throw new Error('Not implemented');
-}
+function reverseWords(str) {
+const words = str.split(' '); // разделяет строку на слова
+const reversedWords = words.map(word => { // переворачивает каждое слово
+  return word.split('').reverse().join(''); // собирает обратно в строку
+});
+return reversedWords.join(' ');
 
 /**
  * Inverts the case of each character in the given string.
@@ -363,8 +386,20 @@ function reverseWords(/* str */) {
  *   invertCase('JavaScript is Fun') => 'jAVAsCRIPT IS fUN'
  *   invertCase('12345') => '12345'
  */
-function invertCase(/* str */) {
-  throw new Error('Not implemented');
+function invertCase(str) {
+  let result = '';
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i];
+
+        if (char === char.toUpperCase() && char !== char.toLowerCase()) { // если символ в верхнем регистре и это буква - делаем lowercase
+            result += char.toLowerCase();
+        } else if (char === char.toLowerCase() && char !== char.toUpperCase()) {// если символ в нижнем регистре и это буква - делаем uppercase
+            result += char.toUpperCase();
+        } else { // если не буква (цифры, знаки препинания) - оставляем как есть
+            result += char;
+        }
+      }
+    return result;
 }
 
 /**
@@ -380,8 +415,8 @@ function invertCase(/* str */) {
  *   getStringFromTemplate('John','Doe') => 'Hello, John Doe!'
  *   getStringFromTemplate('Chuck','Norris') => 'Hello, Chuck Norris!'
  */
-function getStringFromTemplate(/* firstName, lastName */) {
-  throw new Error('Not implemented');
+function getStringFromTemplate(firstName, lastName) {
+  return `Hello, ${firstName} ${lastName}!`; // использует шаблонные строки
 }
 
 /**
@@ -394,8 +429,14 @@ function getStringFromTemplate(/* firstName, lastName */) {
  *   extractNameFromTemplate('Hello, John Doe!') => 'John Doe'
  *   extractNameFromTemplate('Hello, Chuck Norris!') => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+function extractNameFromTemplate(value) {
+  const parts = value.split(', ');
+  if (parts.length < 2) return ''; // защита, если формат неправильный
+  const namePart = parts[1];
+  const extractedName = namePart.slice(0, -1); // удаляет последний символ ('!')
+  return extractedName;
+}
+
 }
 
 /**
@@ -409,8 +450,8 @@ function extractNameFromTemplate(/* value */) {
  *   unbracketTag('<span>') => 'span'
  *   unbracketTag('<a>') => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  return str.slice(1, -1);
 }
 
 /**
@@ -428,8 +469,8 @@ function unbracketTag(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';').map(email => email.trim());
 }
 
 /**
@@ -448,8 +489,21 @@ function extractEmails(/* str */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  let result = '';
+  for (let i = 0; i < str.length; i++) {
+      const char = str[i]; // проверка, является ли символ большой буквой
+      if (char === char.toUpperCase() && char !== char.toLowerCase()) {
+          result += char.toLowerCase();
+      }
+      else if (char === char.toLowerCase() && char !== char.toUpperCase()) { // проверка, является ли символ маленькой буквой
+          result += char.toUpperCase();
+      }
+      else { // если не буква - оставляет так
+          result += char;
+      }
+  }
+  return result;
 }
 
 /**
@@ -476,8 +530,16 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const words = sentence.split(' ');
+  let longestWord = '';  // переменная для самого длинного слова
+  for (let i = 0; i < words.length; i++) {  // переборка всех слов в массиве
+      const currentWord = words[i];
+      if (currentWord.length > longestWord.length) {  //сравнивает длину текущего слова с самым длинным
+          longestWord = currentWord;  //если текущее слово длиннее, обновляет longestWord
+      }
+  }
+  return longestWord;
 }
 
 module.exports = {

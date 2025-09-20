@@ -166,9 +166,8 @@ function removeFirstOccurrences(str, value) {
 function removeLastOccurrences(str, value) {
   const lastIndex = str.lastIndexOf(value);
   if (lastIndex === -1) {
-    return str; //если подстроки нет, возвращет исходную строку
+    return str;
   }
-  //формирует новую строку без последнего вхождения value
   return str.slice(0, lastIndex) + str.slice(lastIndex + value.length);
 }
 
@@ -186,10 +185,10 @@ function removeLastOccurrences(str, value) {
  */
 function sumOfCodes(str) {
   if (typeof str !== 'string') {
-    return 0; //если вход НЕ строка или НЕ передан, возвращает 0
+    return 0;
   }
   let sum = 0;
-  for (let i = 0; i < str.length; i++) {
+  for (let i = 0; i < str.length; i += 1) {
     sum += str.charCodeAt(i);
   }
   return sum;
@@ -255,7 +254,7 @@ function formatTime(minutes, seconds) {
  *   reverseString('12345') => '54321'
  */
 function reverseString(str) {
-  return str.split('').reverse().join(''); //вначале делает массив, затем переворачивает и соединяет
+  return str.split('').reverse().join('');
 }
 
 /**
@@ -269,9 +268,9 @@ function reverseString(str) {
  *   orderAlphabetically('textbook') => 'bekoottx'
  *   orderAlphabetically('abc123xyz') => '123abcxyz'
  */
-function orderAlphabetically(/* str */) {
-  const charArray = str.split(''); //сортирует массив по алфавиту
-  charArray.sort(); //преобразует массив обратно в строку
+function orderAlphabetically(str) {
+  const charArray = str.split('');
+  charArray.sort();
   return charArray.join('');
 }
 
@@ -306,11 +305,11 @@ function containsSubstring(str, substring) {
  *   countVowels('XYZ') => 1
  */
 function countVowels(str) {
-  const vowels = 'aeiouyAEIOUY'; //создает строку с гласными
-  let count = 0; // инициирует счестчик
-  for (let i = 0; i < str.length; i++) { // проходится циклом по каждой букве чтобы проверить
+  const vowels = 'aeiouyAEIOUY';
+  let count = 0;
+  for (let i = 0; i < str.length; i += 1) {
     if (vowels.includes(str[i])) {
-      count++;
+      count += 1;
     }
   }
   return count;
@@ -330,9 +329,9 @@ function countVowels(str) {
  *   isPalindrome('No lemon, no melon') => true
  */
 function isPalindrome(str) {
-const cleanedStr = str.toLowerCase().replace(/[^a-z0-9]/g, ''); // приводит к нижнему регистру и удаляет все, кроме бук-цифр
-const reversedStr = cleanedStr.split('').reverse().join(''); // создаёт обратную строку
-return cleanedStr === reversedStr; // сравнивает исходную и обратную
+  const cleanedStr = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const reversedStr = cleanedStr.split('').reverse().join('');
+  return cleanedStr === reversedStr;
 }
 
 /**
@@ -348,14 +347,12 @@ return cleanedStr === reversedStr; // сравнивает исходную и �
  *   findLongestWord('No words here') => 'words'
  */
 function findLongestWord(sentence) {
-  const words = sentence.split(' '); // разбивает предложение на слова
-  let longestWord = ''; // здесь храним самое длинное слово
-  for (let word of words) {
-      if (word.length > longestWord.length) { // проходится по всему массиву и сравнивает длины слов
-          longestWord = word;
-      }
-  }
-  return longestWord;
+  return sentence.split(' ').reduce((longestWord, currentWord) => {
+    if (currentWord.length > longestWord.length) {
+      return currentWord;
+    }
+    return longestWord;
+  }, '');
 }
 
 /**
@@ -369,11 +366,12 @@ function findLongestWord(sentence) {
  *   reverseWords('The Quick Brown Fox') => 'ehT kciuQ nworB xoF'
  */
 function reverseWords(str) {
-const words = str.split(' '); // разделяет строку на слова
-const reversedWords = words.map(word => { // переворачивает каждое слово
-  return word.split('').reverse().join(''); // собирает обратно в строку
-});
-return reversedWords.join(' ');
+  const words = str.split(' ');
+  const reversedWords = words.map((word) => {
+    return word.split('').reverse().join('');
+  });
+  return reversedWords.join(' ');
+}
 
 /**
  * Inverts the case of each character in the given string.
@@ -388,18 +386,17 @@ return reversedWords.join(' ');
  */
 function invertCase(str) {
   let result = '';
-    for (let i = 0; i < str.length; i++) {
-        const char = str[i];
-
-        if (char === char.toUpperCase() && char !== char.toLowerCase()) { // если символ в верхнем регистре и это буква - делаем lowercase
-            result += char.toLowerCase();
-        } else if (char === char.toLowerCase() && char !== char.toUpperCase()) {// если символ в нижнем регистре и это буква - делаем uppercase
-            result += char.toUpperCase();
-        } else { // если не буква (цифры, знаки препинания) - оставляем как есть
-            result += char;
-        }
-      }
-    return result;
+  for (let i = 0; i < str.length; i += 1) {
+    const char = str[i];
+    if (char === char.toUpperCase() && char !== char.toLowerCase()) {
+      result += char.toLowerCase();
+    } else if (char === char.toLowerCase() && char !== char.toUpperCase()) {
+      result += char.toUpperCase();
+    } else {
+      result += char;
+    }
+  }
+  return result;
 }
 
 /**
@@ -416,7 +413,7 @@ function invertCase(str) {
  *   getStringFromTemplate('Chuck','Norris') => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-  return `Hello, ${firstName} ${lastName}!`; // использует шаблонные строки
+  return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -431,12 +428,10 @@ function getStringFromTemplate(firstName, lastName) {
  */
 function extractNameFromTemplate(value) {
   const parts = value.split(', ');
-  if (parts.length < 2) return ''; // защита, если формат неправильный
+  if (parts.length < 2) return '';
   const namePart = parts[1];
-  const extractedName = namePart.slice(0, -1); // удаляет последний символ ('!')
+  const extractedName = namePart.slice(0, -1);
   return extractedName;
-}
-
 }
 
 /**
@@ -470,7 +465,7 @@ function unbracketTag(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-  return str.split(';').map(email => email.trim());
+  return str.split(';').map((email) => email.trim());
 }
 
 /**
@@ -491,17 +486,15 @@ function extractEmails(str) {
  */
 function encodeToRot13(str) {
   let result = '';
-  for (let i = 0; i < str.length; i++) {
-      const char = str[i]; // проверка, является ли символ большой буквой
-      if (char === char.toUpperCase() && char !== char.toLowerCase()) {
-          result += char.toLowerCase();
-      }
-      else if (char === char.toLowerCase() && char !== char.toUpperCase()) { // проверка, является ли символ маленькой буквой
-          result += char.toUpperCase();
-      }
-      else { // если не буква - оставляет так
-          result += char;
-      }
+  for (let i = 0; i < str.length; i += 1) {
+    const char = str[i];
+    if (char === char.toUpperCase() && char !== char.toLowerCase()) {
+      result += char.toLowerCase();
+    } else if (char === char.toLowerCase() && char !== char.toUpperCase()) {
+      result += char.toUpperCase();
+    } else {
+      result += char;
+    }
   }
   return result;
 }
@@ -531,13 +524,13 @@ function encodeToRot13(str) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-  const words = sentence.split(' ');
-  let longestWord = '';  // переменная для самого длинного слова
-  for (let i = 0; i < words.length; i++) {  // переборка всех слов в массиве
-      const currentWord = words[i];
-      if (currentWord.length > longestWord.length) {  //сравнивает длину текущего слова с самым длинным
-          longestWord = currentWord;  //если текущее слово длиннее, обновляет longestWord
-      }
+  const words = value.split(' ');
+  let longestWord = '';
+  for (let i = 0; i < words.length; i += 1) {
+    const currentWord = words[i];
+    if (currentWord.length > longestWord.length) {
+      longestWord = currentWord;
+    }
   }
   return longestWord;
 }

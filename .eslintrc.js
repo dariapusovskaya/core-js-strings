@@ -14,5 +14,4 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2024,
   },
-  noInlineConfig: true,
 };
